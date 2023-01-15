@@ -48,9 +48,14 @@ namespace GedcomParser.Parsers
                         person.Death = resultContainer.ParseDatePlace(chunk);
                         break;
 
+                    case "DSCR":
+                        person.Description = chunk.Data;
+                        break;
+
                     case "EDUC":
                         person.Education = chunk.Data;
                         break;
+
                     case "EVEN":
                         string eventType = GetEventType(chunk);
                         if (person.Events.ContainsKey(eventType))
@@ -71,7 +76,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "FACT":
-                        person.Note = resultContainer.ParseNote(person.Note, chunk);
+                        person.Facts.Add(resultContainer.ParseText(chunk.Data, chunk));
                         break;
 
                     case "GRAD":
@@ -113,7 +118,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NOTE":
-                        person.Note = resultContainer.ParseNote(person.Note, chunk);
+                        person.Notes.Add(resultContainer.ParseText(chunk.Data, chunk));
                         break;
 
                     case "OCCU":
@@ -144,11 +149,14 @@ namespace GedcomParser.Parsers
                         person.Title = chunk.Data;
                         break;
 
+                    case "SOUR":
+                        person.Citation = resultContainer.ParseCitation(chunk);
+                        break;
+
                     // Deliberately skipped for now
                     case "_GRP":
                     case "_UPD":
                     case "CONF":
-                    case "DSCR":
                     case "FAMS":
                     case "FAMC":
                     case "HIST":
@@ -157,7 +165,6 @@ namespace GedcomParser.Parsers
                     case "OBJE":
                     case "PAGE":
                     case "RIN":
-                    case "SOUR":
                         resultContainer.Warnings.Add($"Skipped Person Type='{chunk.Type}'");
                         break;
 

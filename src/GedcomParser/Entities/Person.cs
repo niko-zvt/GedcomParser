@@ -17,11 +17,12 @@ namespace GedcomParser.Entities
         public string Education { get; set; }
         public string Religion { get; set; }
         public string Nationality { get; set; }
-        public string Note { get; set; }
+        public Citation Citation { get; set; }
         public string Changed { get; set; }
         public string Occupation { get; set; }
         public string Health { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public Address Address { get; set; }
         public Adoption Adoption { get; set; }
         public List<DatePlace> Residence { get; set; } = new List<DatePlace>();
@@ -32,5 +33,7 @@ namespace GedcomParser.Entities
         public Dictionary<string, List<DatePlace>> Events { get; set; } = new Dictionary<string, List<DatePlace>>();
         public List<DatePlace> Census { get; set; } = new List<DatePlace>();
         public List<DatePlace> Destination { get; set; } = new List<DatePlace>();
+        public List<string> Notes { get; set; } = new List<string>();
+        public List<string> Facts { get; set; } = new List<string>();
     }
 }
