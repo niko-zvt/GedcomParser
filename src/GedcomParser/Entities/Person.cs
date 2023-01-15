@@ -14,6 +14,9 @@ namespace GedcomParser.Entities
         public DatePlace Death { get; set; }
         public DatePlace Buried { get; set; }
         public DatePlace Baptized { get; set; }
+        public string FamilyId { get; set; }
+        public string FamilyChildId { get; set; }
+        public PedigreeType Pedigree { get; set; }
         public string Education { get; set; }
         public string Religion { get; set; }
         public string Nationality { get; set; }
@@ -33,7 +36,14 @@ namespace GedcomParser.Entities
         public Dictionary<string, List<DatePlace>> Events { get; set; } = new Dictionary<string, List<DatePlace>>();
         public List<DatePlace> Census { get; set; } = new List<DatePlace>();
         public List<DatePlace> Destination { get; set; } = new List<DatePlace>();
-        public List<string> Notes { get; set; } = new List<string>();
+        public Dictionary<string, List<string>> Notes { get; set; } = new Dictionary<string, List<string>>();
         public List<string> Facts { get; set; } = new List<string>();
+
+        public enum PedigreeType
+        {
+            Adopted, // Indicates adoptive parents.
+            Birth,   // Indicates official parents (birth parents).
+            Foster,  // Indicates child was included in a foster or guardian family.
+        }
     }
 }
