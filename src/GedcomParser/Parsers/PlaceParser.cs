@@ -42,7 +42,12 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "_PLP":
-                        place._PLP = chunk.Reference;
+                        // Do nothing
+                        // Answer from a Genney Digit representative:
+                        // "The _PLP tag is a reference to the administrative parent place id.
+                        // Genney is using a place database with places organized in
+                        // administrative structure and the tag is primarily for
+                        // internal use in Genney."
                         break;
 
                     default:
