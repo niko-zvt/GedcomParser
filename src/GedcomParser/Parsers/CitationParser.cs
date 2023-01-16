@@ -36,7 +36,7 @@ namespace GedcomParser.Parsers
                          */
 
                         case "PAGE":
-                            citation.Page = chunk.Data;
+                            citation.Page = resultContainer.ParseText(chunk.Data, chunk);
                             break;
 
                         case "QUAY":
@@ -52,6 +52,10 @@ namespace GedcomParser.Parsers
 
                         case "EVEN":
                             citation.Events.Add(resultContainer.ParseEvent(chunk));
+                            break;
+
+                        case "NOTE":
+                            citation.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                             break;
 
                          // resultContainer.Warnings.Add($"Skipped Source Citation Type='{chunk.Type}'");

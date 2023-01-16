@@ -30,7 +30,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "_PLC":
-                        resultContainer.PlaceParser(chunk);
+                        resultContainer.ParsePlace(chunk);
                         resultContainer.AddIdChunk(chunk);
                         break;
 

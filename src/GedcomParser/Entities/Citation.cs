@@ -10,6 +10,7 @@ namespace GedcomParser.Entities
         public string Text { get; set; }
         public DataQuality CertaintyAssessment { get; set; }
         public List<Event> Events { get; set; } = new List<Event>();
+        public List<string> Notes { get; set; } = new List<string>();
         public enum DataQuality
         {
             Unknown = -1,

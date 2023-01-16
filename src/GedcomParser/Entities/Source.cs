@@ -10,7 +10,7 @@ namespace GedcomParser.Entities
         public string Title { get; set; }
         public string Abbreviation { get; set; }
         public string Publication { get; set; }
-        public string Text { get; set; }
+        public List<string> Text { get; set; } = new List<string>();
         public string Reference { get; set; }
         public string RepositoryId { get; set; }
         public string ResponsibleAgency { get; set; }
@@ -18,6 +18,7 @@ namespace GedcomParser.Entities
         public List<Citation> Citations { get; set; } = new List<Citation>();
         public List<string> Notes { get; set; } = new List<string>();
         public List<Event> Events { get; set; } = new List<Event>();
-
+        public string Type { get; set; }
+        public string Media { get; set; }
     }
 }

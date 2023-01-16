@@ -7,24 +7,46 @@ using GedcomParser.Extensions;
 
 namespace GedcomParser.Parsers
 {
-    public static class PlaceRecordParser
+    public static class PlaceParser
     {
-        internal static void PlaceParser(this ResultContainer resultContainer, GedcomChunk indiChunk)
+        internal static void ParsePlace(this ResultContainer resultContainer, GedcomChunk indiChunk)
         {
-            var place = new PlaceRecord { Id = indiChunk.Id };
+            var place = new Place { Id = indiChunk.Id };
 
             foreach (var chunk in indiChunk.SubChunks)
             {
                 switch (chunk.Type)
                 {
-                    // Deliberately skipped for now
-                    //case "_TYPE":
-                    //case "_MEDI":
-                    //    resultContainer.Warnings.Add($"Skipped Source Record Type='{chunk.Type}'");
-                    //    break;
+                    case "NAME":
+                        place.Name = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "ABBR":
+                        place.Abbreviation = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "RIN":
+                        place.AutoRecordId = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "NOTE":
+                        place.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
+                        break;
+
+                    case "TYPE":
+                        place.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "FORM":
+                        place.Form = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "_PLP":
+                        place._PLP = chunk.Reference;
+                        break;
 
                     default:
-                        resultContainer.Errors.Add($"Failed to handle Place Record Type='{chunk.Type}'");
+                        resultContainer.Errors.Add($"Failed to handle Place (_PLC) Type='{chunk.Type}'");
                         break;
                 }
             }

@@ -7,37 +7,72 @@ namespace GedcomParser.Parsers
 {
     public static class DateParser
     {
-        internal static DatePlace ParseDatePlace(this ResultContainer resultContainer, GedcomChunk chunk)
+        internal static DatePlace ParseDatePlace(this ResultContainer resultContainer, GedcomChunk indiChunk)
         {
-            var datePlace = new DatePlace
-            {
-                Date = chunk.SubChunks.SingleOrDefault(c => c.Type == "DATE")?.Data,
-                Place = chunk.SubChunks.SingleOrDefault(c => c.Type == "PLAC")?.Data
-            };
+            var datePlace = new DatePlace();
+            datePlace.Description = indiChunk.Data;
 
-            var map = chunk.SubChunks.SingleOrDefault(c => c.Type == "MAP");
-            if (map != null)
+            foreach (var chunk in indiChunk.SubChunks)
             {
-                datePlace.Latitude = map.SubChunks.SingleOrDefault(c => c.Type == "LATI")?.Data;
-                datePlace.Longitude = map.SubChunks.SingleOrDefault(c => c.Type == "LONG")?.Data;
-            }
+                switch (chunk.Type)
+                {
+                    case "DATE":
+                        datePlace.Date = chunk.Data;
+                        break;
 
-            var note = chunk.SubChunks.SingleOrDefault(c => c.Type == "NOTE");
-            if (note != null)
-            {
-                datePlace.Note = resultContainer.ParseNote(note.Data, note);
-            }
+                    case "PLAC":
+                        datePlace.Place = chunk.Data;
+                        break;
 
-            var description = chunk.Data;
-            if(description!=null)
-            {
-                datePlace.Description = description;
-            }
+                    case "MAP":
+                        var map = chunk;
+                        if (map != null)
+                        {
+                            datePlace.Latitude = map.SubChunks.SingleOrDefault(c => c.Type == "LATI")?.Data;
+                            datePlace.Longitude = map.SubChunks.SingleOrDefault(c => c.Type == "LONG")?.Data;
+                        }
+                        break;
 
-            var place = chunk.SubChunks.SingleOrDefault(c => c.Type == "_PLC");
-            if (place != null)
-            {
-                resultContainer.Warnings.Add($"Failed to handle Date Place Type='{chunk.Type}'");
+                    case "NOTE":
+                        datePlace.Note = resultContainer.ParseNote(chunk.Data, chunk);
+                        break;
+
+                    case "TYPE":
+                        datePlace.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "SOUR":
+                        datePlace.Citation = resultContainer.ParseCitation(chunk);
+                        break;
+
+                    case "TEXT":
+                        datePlace.Description = resultContainer.ParseText(datePlace.Description + chunk.Data, chunk);
+                        break;
+
+                    case "ADDR":
+                        datePlace.Address = resultContainer.ParseAddress(chunk);
+                        break;
+
+                    case "CAUS":
+                        datePlace.CauseOfEvent = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "EMAIL":
+                        datePlace.Address.Email.Add(resultContainer.ParseText(chunk.Data, chunk));
+                        break;
+
+                    case "AGE":
+                        datePlace.Age = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "_PLC":
+                        datePlace.PlaceId = chunk.Reference;
+                        break;
+
+                    default:
+                        resultContainer.Errors.Add($"Failed to handle Date Place Type='{chunk.Type}'");
+                        break;
+                }
             }
 
             return datePlace;

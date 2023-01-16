@@ -72,7 +72,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "TEXT":
-                        source.Text = resultContainer.ParseText(chunk.Data, chunk);
+                        source.Text.Add(resultContainer.ParseText(chunk.Data, chunk));
                         break;
 
                     case "REPO":
@@ -91,10 +91,14 @@ namespace GedcomParser.Parsers
                         source.Name = chunk.Data;
                         break;
 
-                    // Deliberately skipped for now
                     case "_TYPE":
+                        source.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    // Deliberately skipped for now  
+                    case "MEDI":
                     case "_MEDI":
-                        resultContainer.Warnings.Add($"Skipped Source Record Type='{chunk.Type}'");
+                        source.Media = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     default:
