@@ -9,6 +9,7 @@ namespace GedcomParser.Entities
         public Person From { get; set; }
         public Person To { get; set; }
         public string AutoRecordId { get; set; }
+        public DatePlace LastUpdateDate { get; set; }
     }
 
     public class ChildRelation : Relation

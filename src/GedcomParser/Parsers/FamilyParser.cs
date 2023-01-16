@@ -104,8 +104,11 @@ namespace GedcomParser.Parsers
                         spousalRelation.AutoRecordId = chunk.Data;
                         break;
 
-                    // Deliberately skipped for now
                     case "_UPD":
+                        spousalRelation.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
+                        break;
+
+                    // Deliberately skipped for now
                     case "CHAN":
                     case "DSCR":
                     case "EVEN":

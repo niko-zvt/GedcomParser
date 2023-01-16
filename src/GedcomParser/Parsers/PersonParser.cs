@@ -217,9 +217,12 @@ namespace GedcomParser.Parsers
                         person.AutoRecordId = chunk.Data;
                         break;
 
+                    case "_UPD":
+                        person.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
+                        break;
+
                     // Deliberately skipped for now
                     case "_GRP":
-                    case "_UPD":
                     case "CONF":
                     case "NCHI":
                     case "NMR":
