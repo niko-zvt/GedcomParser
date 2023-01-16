@@ -42,7 +42,9 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "_PLP":
-                        // Do nothing
+                        // Do nothing.
+                        // Genney Digit proprietary tags.
+                        //
                         // Answer from a Genney Digit representative:
                         // "The _PLP tag is a reference to the administrative parent place id.
                         // Genney is using a place database with places organized in

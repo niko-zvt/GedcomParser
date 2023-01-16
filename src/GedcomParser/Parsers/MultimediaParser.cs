@@ -17,6 +17,25 @@ namespace GedcomParser.Parsers
             {
                 switch (chunk.Type)
                 {
+                    case "FILE":
+                        multimedia.Files.Add(resultContainer.ParseText(chunk.Data, chunk).TrimEnd(new Char[] { '\r', '\n' }));
+                        break;
+
+                    case "TITL":
+                        multimedia.Title = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "FORM":
+                        multimedia.Format = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "_PRIM":
+                    case "_PRNT":
+                    case "_SIZE":
+                        // Do nothing
+                        // Genney Digit proprietary tags
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Multimedia Type='{chunk.Type}'");
                         break;
