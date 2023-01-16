@@ -62,13 +62,13 @@ namespace GedcomParser.Parsers
                         string eventType = GetEventType(chunk);
                         if (person.Events.ContainsKey(eventType))
                         {
-                            person.Events[eventType].Add(resultContainer.ParseDatePlace(chunk));
+                            person.Events[eventType].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
                         }
                         else
                         {
                             person.Events.Add(eventType, new List<DatePlace>
                             {
-                                resultContainer.ParseDatePlace(chunk)
+                                resultContainer.ParseDatePlace(chunk) // TODO: Change parser to EVENT
                             });
                         }
                         break;
@@ -221,13 +221,16 @@ namespace GedcomParser.Parsers
                         person.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
                         break;
 
+                    case "OBJE":
+                        person.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        break;
+
                     // Deliberately skipped for now
                     case "_PLC":
                     case "_GRP":
                     case "CONF":
                     case "NCHI":
                     case "NMR":
-                    case "OBJE":
                     case "PAGE":
                         resultContainer.Warnings.Add($"Skipped Person Type='{chunk.Type}'");
                         break;

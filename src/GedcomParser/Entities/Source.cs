@@ -20,5 +20,6 @@ namespace GedcomParser.Entities
         public List<Event> Events { get; set; } = new List<Event>();
         public string Type { get; set; }
         public string Media { get; set; }
+        public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
     }
 }

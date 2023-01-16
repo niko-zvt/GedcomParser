@@ -40,20 +40,20 @@ namespace GedcomParser.Parsers
                      */
 
                     case "DATA":
-                        var currentEvent = chunk.SubChunks.SingleOrDefault(c => c.Type == "EVEN");
-                        if (currentEvent != null)
-                            source.Events.Add(resultContainer.ParseEvent(currentEvent));
+                        {
+                            var currentEvent = chunk.SubChunks.SingleOrDefault(c => c.Type == "EVEN");
+                            if (currentEvent != null)
+                                source.Events.Add(resultContainer.ParseEvent(currentEvent));
 
-                        var agency = chunk.SubChunks.SingleOrDefault(c => c.Type == "AGNC");
-                        if (currentEvent != null)
-                            source.ResponsibleAgency = resultContainer.ParseText(agency.Data, agency);
+                            var agency = chunk.SubChunks.SingleOrDefault(c => c.Type == "AGNC");
+                            if (currentEvent != null)
+                                source.ResponsibleAgency = resultContainer.ParseText(agency.Data, agency);
 
-                        var note = chunk.SubChunks.SingleOrDefault(c => c.Type == "NOTE");
-                        if (note != null)
-                            source.Notes.Add(resultContainer.ParseNote(note.Data, note));
-
+                            var note = chunk.SubChunks.SingleOrDefault(c => c.Type == "NOTE");
+                            if (note != null)
+                                source.Notes.Add(resultContainer.ParseNote(note.Data, note));
+                        }
                         break;
-
 
                     case "AUTH":
                         source.Author = chunk.Data;
@@ -94,11 +94,14 @@ namespace GedcomParser.Parsers
                     case "_TYPE":
                         source.Type = resultContainer.ParseText(chunk.Data, chunk);
                         break;
-
-                    // Deliberately skipped for now  
+                    
                     case "MEDI":
                     case "_MEDI":
                         source.Media = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "OBJE":
+                        source.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
                         break;
 
                     default:

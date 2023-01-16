@@ -65,6 +65,10 @@ namespace GedcomParser.Parsers
                         datePlace.Age = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
+                    case "OBJE":
+                        datePlace.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        break;
+
                     case "_PLC":
                         datePlace.PlaceId = chunk.Reference;
                         break;

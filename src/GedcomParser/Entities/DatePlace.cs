@@ -15,8 +15,9 @@ namespace GedcomParser.Entities
 
         // The age of the individual at the time an event occurred, or the age listed in the document.
         public string Age { get; set; }
+        public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
         public Address Address { get; set; } = new Address();
         public string CauseOfEvent { get; set; }
-        public Citation Citation { get; set; }
+        public Citation Citation { get; set; } = new Citation();
     }
 }

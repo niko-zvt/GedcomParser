@@ -40,5 +40,6 @@ namespace GedcomParser.Entities
         public List<DatePlace> Destination { get; set; } = new List<DatePlace>();
         public Dictionary<string, List<string>> Notes { get; set; } = new Dictionary<string, List<string>>();
         public List<string> Facts { get; set; } = new List<string>();
+        public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
     }
 }
