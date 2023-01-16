@@ -11,6 +11,6 @@ namespace GedcomParser.Entities
         public List<string> Notes { get; set; } = new List<string>();
         public string AutoRecordId { get; set; }
         public string Form { get; set; }
-        public string _PLP { get; set; }
+        public string _PLP { get; set; } // TODO: Change name
     }
 }
