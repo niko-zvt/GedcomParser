@@ -29,6 +29,11 @@ namespace GedcomParser.Parsers
                         resultContainer.AddIdChunk(chunk);
                         break;
 
+                    case "_PLC":
+                        resultContainer.PlaceParser(chunk);
+                        resultContainer.AddIdChunk(chunk);
+                        break;
+
                     // Deliberately skipped for now
                     case "NOTE":
                     case "OBJE":
@@ -41,7 +46,6 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "_GRP":
-                    case "_PLC":
                     case "GEDC":
                     default:
                         resultContainer.Errors.Add($"Failed to handle top level Type='{chunk.Type}'");
@@ -58,6 +62,7 @@ namespace GedcomParser.Parsers
             {
                 case "NOTE":
                 case "SOUR":
+                case "_PLC":
                     return 0;
                 case "INDI":
                     return 1;

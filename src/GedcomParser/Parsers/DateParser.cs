@@ -14,6 +14,7 @@ namespace GedcomParser.Parsers
                 Date = chunk.SubChunks.SingleOrDefault(c => c.Type == "DATE")?.Data,
                 Place = chunk.SubChunks.SingleOrDefault(c => c.Type == "PLAC")?.Data
             };
+
             var map = chunk.SubChunks.SingleOrDefault(c => c.Type == "MAP");
             if (map != null)
             {
@@ -31,6 +32,12 @@ namespace GedcomParser.Parsers
             if(description!=null)
             {
                 datePlace.Description = description;
+            }
+
+            var place = chunk.SubChunks.SingleOrDefault(c => c.Type == "_PLC");
+            if (place != null)
+            {
+                resultContainer.Warnings.Add($"Failed to handle Date Place Type='{chunk.Type}'");
             }
 
             return datePlace;

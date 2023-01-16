@@ -222,6 +222,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     // Deliberately skipped for now
+                    case "_PLC":
                     case "_GRP":
                     case "CONF":
                     case "NCHI":
