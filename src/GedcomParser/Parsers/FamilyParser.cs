@@ -98,7 +98,10 @@ namespace GedcomParser.Parsers
                         {
                             parents.Add(wife);
                         }
+                        break;
 
+                    case "RIN":
+                        spousalRelation.AutoRecordId = chunk.Data;
                         break;
 
                     // Deliberately skipped for now
@@ -113,7 +116,6 @@ namespace GedcomParser.Parsers
                     case "NMR":
                     case "OBJE":
                     case "PAGE":
-                    case "RIN":
                     case "SOUR":
                         resultContainer.Warnings.Add($"Skipped Family Type='{chunk.Type}'");
                         break;

@@ -213,6 +213,10 @@ namespace GedcomParser.Parsers
                         }
                         break;
 
+                    case "RIN":
+                        person.AutoRecordId = chunk.Data;
+                        break;
+
                     // Deliberately skipped for now
                     case "_GRP":
                     case "_UPD":
@@ -221,7 +225,6 @@ namespace GedcomParser.Parsers
                     case "NMR":
                     case "OBJE":
                     case "PAGE":
-                    case "RIN":
                         resultContainer.Warnings.Add($"Skipped Person Type='{chunk.Type}'");
                         break;
 

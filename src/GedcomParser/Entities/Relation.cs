@@ -8,6 +8,7 @@ namespace GedcomParser.Entities
         public string FamilyUid { get; set; }
         public Person From { get; set; }
         public Person To { get; set; }
+        public string AutoRecordId { get; set; }
     }
 
     public class ChildRelation : Relation

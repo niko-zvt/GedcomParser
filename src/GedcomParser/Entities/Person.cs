@@ -26,6 +26,7 @@ namespace GedcomParser.Entities
         public string Health { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string AutoRecordId { get; set; }
         public Address Address { get; set; }
         public Adoption Adoption { get; set; }
         public List<DatePlace> Residence { get; set; } = new List<DatePlace>();

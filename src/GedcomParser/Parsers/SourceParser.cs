@@ -84,7 +84,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "RIN":
-                        source.AutorecordId = chunk.Data;
+                        source.AutoRecordId = chunk.Data;
                         break;
 
                     case "NAME":

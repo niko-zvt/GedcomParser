@@ -14,7 +14,7 @@ namespace GedcomParser.Entities
         public string Reference { get; set; }
         public string RepositoryId { get; set; }
         public string ResponsibleAgency { get; set; }
-        public string AutorecordId { get; set; }
+        public string AutoRecordId { get; set; }
         public List<Citation> Citations { get; set; } = new List<Citation>();
         public List<string> Notes { get; set; } = new List<string>();
         public List<Event> Events { get; set; } = new List<Event>();
