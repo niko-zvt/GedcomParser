@@ -236,30 +236,7 @@ namespace GedcomParser.Parsers
 
             resultContainer.Persons.Add(person);
         }
-
-        internal static Person.PedigreeType ParsePedigree(this ResultContainer resultContainer, GedcomChunk incomingChunk)
-        {
-            var pedigree = PedigreeType.Birth;
-
-            if (incomingChunk != null)
-            {
-                var pedigreeValue = incomingChunk.Data;
-                if (!pedigreeValue.IsNullOrEmpty())
-                {
-                    try
-                    {
-                        pedigree = (PedigreeType)Enum.Parse(typeof(PedigreeType), pedigreeValue, true); // case insensitive
-                    }
-                    catch 
-                    {
-                        resultContainer.Errors.Add($"Failed to convert String to Enum in Pedigree Type ='{incomingChunk.Type}'");
-                    }
-                }
-            }
-
-            return pedigree;
-        }
-            internal static string GetEventType(GedcomChunk chunk)
+        internal static string GetEventType(GedcomChunk chunk)
         {
             return chunk.SubChunks.SingleOrDefault(c => c.Type == "TYPE")?.Data.ToLower();
         }

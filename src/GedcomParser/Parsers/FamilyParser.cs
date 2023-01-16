@@ -201,7 +201,7 @@ namespace GedcomParser.Parsers
                                 switch (chunk2.Type)
                                 {
                                     case "PEDI":
-                                        childRelation.Pedigree = chunk2.Data;
+                                        childRelation.Pedigree = resultContainer.ParsePedigree(chunk2);
                                         break;
 
                                     case "STAT":

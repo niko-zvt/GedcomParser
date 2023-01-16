@@ -13,7 +13,7 @@ namespace GedcomParser.Entities
 
     public class ChildRelation : Relation
     {
-        public string Pedigree { get; set; }
+        public Pedigree Pedigree { get; set; }
         public string Validity { get; set; }
         public string Adoption { get; set; }
     }
