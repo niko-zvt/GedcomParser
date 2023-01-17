@@ -29,11 +29,11 @@ namespace GedcomParser.Parsers
                         multimedia.Format = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
-                    case "_PRIM":
-                    case "_PRNT":
-                    case "_SIZE":
+                    // Genney Digit proprietary tags
+                    case "_PRIM": // portrait/primary image (Y/N)
+                    case "_PRNT": // if used in printing (Y/N)
+                    case "_SIZE": // print size
                         // Do nothing
-                        // Genney Digit proprietary tags
                         break;
 
                     default:
