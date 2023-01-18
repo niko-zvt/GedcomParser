@@ -34,6 +34,10 @@ namespace GedcomParser.Parsers
                         resultContainer.AddIdChunk(chunk);
                         break;
 
+                    case "_GRP":
+                        // TODO: Group
+                        break;
+
                     // Deliberately skipped for now
                     case "NOTE":
                     case "OBJE":
@@ -43,9 +47,9 @@ namespace GedcomParser.Parsers
                     case "HEAD":
                     case "TRLR":
                     case "CSTA": // Child status; used as 'enum' by Reunion software
+                        // resultContainer.Warnings.Add($"Failed to handle top level Type='{chunk.Type}'");
                         break;
-
-                    case "_GRP":
+ 
                     case "GEDC":
                     default:
                         resultContainer.Errors.Add($"Failed to handle top level Type='{chunk.Type}'");

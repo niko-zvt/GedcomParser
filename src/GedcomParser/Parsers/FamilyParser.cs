@@ -108,6 +108,10 @@ namespace GedcomParser.Parsers
                         spousalRelation.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
                         break;
 
+                    case "SOUR":
+                        spousalRelation.Citations.Add(resultContainer.ParseCitation(chunk));
+                        break;
+
                     // Deliberately skipped for now
                     case "CHAN":
                     case "DSCR":
@@ -119,7 +123,6 @@ namespace GedcomParser.Parsers
                     case "NMR":
                     case "OBJE":
                     case "PAGE":
-                    case "SOUR":
                         resultContainer.Warnings.Add($"Skipped Family Type='{chunk.Type}'");
                         break;
 

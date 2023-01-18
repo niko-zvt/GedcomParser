@@ -20,7 +20,6 @@ namespace GedcomParser.Entities
         public string Education { get; set; }
         public string Religion { get; set; }
         public string Nationality { get; set; }
-        public Citation Citation { get; set; }
         public string Changed { get; set; }
         public string Occupation { get; set; }
         public string Health { get; set; }
@@ -41,5 +40,6 @@ namespace GedcomParser.Entities
         public Dictionary<string, List<string>> Notes { get; set; } = new Dictionary<string, List<string>>();
         public List<string> Facts { get; set; } = new List<string>();
         public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
+        public List<Citation> Citations { get; set; } = new List<Citation>();
     }
 }

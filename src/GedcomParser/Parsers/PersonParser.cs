@@ -51,11 +51,11 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "DSCR":
-                        person.Description = chunk.Data;
+                        person.Description = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "EDUC":
-                        person.Education = chunk.Data;
+                        person.Education = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "EVEN":
@@ -77,7 +77,7 @@ namespace GedcomParser.Parsers
                         person.Emigrated.Add(resultContainer.ParseDatePlace(chunk));
                         break;
 
-                    case "FACT":
+                    case "FACT": // TODO: Change text parser to fact parser
                         person.Facts.Add(resultContainer.ParseText(chunk.Data, chunk));
                         break;
 
@@ -86,11 +86,11 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "HEAL":
-                        person.Health = chunk.Data;
+                        person.Health = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "IDNO":
-                        person.IdNumber = chunk.Data;
+                        person.IdNumber = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "IMMI":
@@ -112,7 +112,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NATI":
-                        person.Nationality = chunk.Data;
+                        person.Nationality = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "NATU":
@@ -132,7 +132,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "OCCU":
-                        person.Occupation = chunk.Data;
+                        person.Occupation = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "RESI":
@@ -148,19 +148,19 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "RELI":
-                        person.Religion = chunk.Data;
+                        person.Religion = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "SEX":
-                        person.Gender = chunk.Data;
+                        person.Gender = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "TITL":
-                        person.Title = chunk.Data;
+                        person.Title = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "SOUR":
-                        person.Citation = resultContainer.ParseCitation(chunk);
+                        person.Citations.Add(resultContainer.ParseCitation(chunk));
                         break;
 
                     case "FAMS":
