@@ -56,7 +56,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "AUTH":
-                        source.Author = chunk.Data;
+                        source.Author = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "TITL":
@@ -64,11 +64,11 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "ABBR":
-                        source.Abbreviation = chunk.Data;
+                        source.Abbreviation = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "PUBL":
-                        source.Publication = chunk.Data;
+                        source.Publication = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "TEXT":
@@ -80,15 +80,15 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "REFN":
-                        source.Reference = chunk.Data;
+                        source.Reference = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "RIN":
-                        source.AutoRecordId = chunk.Data;
+                        source.AutoRecordId = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "NAME":
-                        source.Name = chunk.Data;
+                        source.Name = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "_TYPE":
