@@ -16,15 +16,19 @@ namespace GedcomParser.Entities
         public DatePlace Baptized { get; set; }
         public string FamilyId { get; set; }
         public string FamilyChildId { get; set; }
+        public string NumberOfChildren { get; set; }
+        public string NumberOfRelationships { get; set; }
         public Pedigree Pedigree { get; set; }
-        public string Education { get; set; }
+        public Education Education { get; set; }
         public string Religion { get; set; }
+        public Confirmation Confirmation { get; set; }
         public string Nationality { get; set; }
         public string Changed { get; set; }
-        public string Occupation { get; set; }
+        public Occupation Occupation { get; set; }
         public string Health { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public Description Description { get; set; }
+        public string GroupId { get; set; }
         public string AutoRecordId { get; set; }
         public Address Address { get; set; }
         public Adoption Adoption { get; set; }
@@ -38,8 +42,9 @@ namespace GedcomParser.Entities
         public List<DatePlace> Census { get; set; } = new List<DatePlace>();
         public List<DatePlace> Destination { get; set; } = new List<DatePlace>();
         public Dictionary<string, List<string>> Notes { get; set; } = new Dictionary<string, List<string>>();
-        public List<string> Facts { get; set; } = new List<string>();
+        public List<Fact> Facts { get; set; } = new List<Fact>();
         public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
         public List<Citation> Citations { get; set; } = new List<Citation>();
+        public List<string> PlaceIds { get; set; } = new List<string>();
     }
 }

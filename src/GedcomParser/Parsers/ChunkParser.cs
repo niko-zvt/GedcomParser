@@ -35,7 +35,8 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "_GRP":
-                        // TODO: Group
+                        resultContainer.ParseGroup(chunk);
+                        resultContainer.AddIdChunk(chunk);
                         break;
 
                     // Deliberately skipped for now

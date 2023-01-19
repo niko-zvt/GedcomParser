@@ -18,7 +18,7 @@ namespace GedcomParser.Parsers
                 switch (chunk.Type)
                 {
                     case "FILE":
-                        multimedia.Files.Add(resultContainer.ParseText(chunk.Data, chunk).TrimEnd(new Char[] { '\r', '\n' }));
+                        multimedia.Files.Add(resultContainer.ParseText(chunk.Data, chunk));
                         break;
 
                     case "TITL":

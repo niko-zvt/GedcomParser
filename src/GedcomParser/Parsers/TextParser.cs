@@ -39,21 +39,15 @@ namespace GedcomParser.Parsers
                         sb.AppendLine(chunk.Data);
                         break;
 
-                    // Deliberately skipped for now
-                    case "_PLC":
-                    case "DATE":
-                    case "PLAC":
-                    case "SOUR":
-                        resultContainer.Warnings.Add($"Skipped {incomingChunk.Type} Type='{chunk.Type}'");
-                        break;
-
                     default:
-                        resultContainer.Errors.Add($"Failed to handle {incomingChunk.Type} Type='{chunk.Type}'");
+                        resultContainer.Errors.Add($"Failed to handle {chunk.Type} type in the TextParser for '{incomingChunk.Type}' tag.");
                         break;
                 }
             }
 
-            return previousText.IsSpecified() ? previousText + Environment.NewLine + sb : sb.ToString();
+            var resultText = previousText.IsSpecified() ? previousText + Environment.NewLine + sb : sb.ToString();
+
+            return resultText.TrimEnd(new char[] { '\r', '\n' });
         }
 
         private static bool IsUnwantedBlob(this GedcomChunk chunk)

@@ -11,6 +11,7 @@ namespace GedcomParser.Entities
         public string AutoRecordId { get; set; }
         public DatePlace LastUpdateDate { get; set; }
         public List<Citation> Citations { get; set; } = new List<Citation>();
+        public Dictionary<string, List<DatePlace>> Events { get; set; } = new Dictionary<string, List<DatePlace>>();
     }
 
     public class ChildRelation : Relation

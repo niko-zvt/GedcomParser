@@ -57,13 +57,7 @@ namespace GedcomParser.Parsers
                         break;
                 }
             }
-
             resultContainer.Places.Add(place);
-        }
-
-        internal static string GetPlaceType(GedcomChunk chunk)
-        {
-            return chunk.SubChunks.SingleOrDefault(c => c.Type == "TYPE")?.Data.ToLower();
         }
     }
 }

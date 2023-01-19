@@ -51,11 +51,11 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "DSCR":
-                        person.Description = resultContainer.ParseText(chunk.Data, chunk);
+                        person.Description = resultContainer.ParseDescription(chunk);
                         break;
 
                     case "EDUC":
-                        person.Education = resultContainer.ParseText(chunk.Data, chunk);
+                        person.Education = resultContainer.ParseEducation(chunk);
                         break;
 
                     case "EVEN":
@@ -77,8 +77,8 @@ namespace GedcomParser.Parsers
                         person.Emigrated.Add(resultContainer.ParseDatePlace(chunk));
                         break;
 
-                    case "FACT": // TODO: Change text parser to fact parser
-                        person.Facts.Add(resultContainer.ParseText(chunk.Data, chunk));
+                    case "FACT":
+                        person.Facts.Add(resultContainer.ParseFact(chunk));
                         break;
 
                     case "GRAD":
@@ -132,7 +132,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "OCCU":
-                        person.Occupation = resultContainer.ParseText(chunk.Data, chunk);
+                        person.Occupation = resultContainer.ParseOccupation(chunk);
                         break;
 
                     case "RESI":
@@ -213,6 +213,10 @@ namespace GedcomParser.Parsers
                         }
                         break;
 
+                    case "NCHI":
+                        person.NumberOfChildren = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
                     case "RIN":
                         person.AutoRecordId = chunk.Data;
                         break;
@@ -225,17 +229,25 @@ namespace GedcomParser.Parsers
                         person.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
                         break;
 
-                    // Deliberately skipped for now
                     case "_PLC":
-                    case "_GRP":
-                    case "CONF":
-                    case "NCHI":
+                        person.PlaceIds.Add(chunk.Reference);
+                        break;
+
                     case "NMR":
-                    case "PAGE":
-                        resultContainer.Warnings.Add($"Skipped Person Type='{chunk.Type}'");
+                        person.NumberOfRelationships = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "CONF":
+                        person.Confirmation = resultContainer.ParseConfirmation(chunk);
+                        break;
+
+                    // Deliberately skipped for now
+                    case "_GRP":
+                        person.GroupId = chunk.Reference;
                         break;
 
                     default:
+                        //resultContainer.Warnings.Add($"Skipped Person Type='{chunk.Type}'");
                         resultContainer.Errors.Add($"Failed to handle Person Type='{chunk.Type}'");
                         break;
                 }

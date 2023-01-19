@@ -39,7 +39,7 @@ namespace GedcomParser.Parsers
                        +1 <<MULTIMEDIA_LINK>>
                      */
 
-                    case "DATA":
+                    case "DATA": // TODO: Create data class and data parser
                         {
                             var currentEvent = chunk.SubChunks.SingleOrDefault(c => c.Type == "EVEN");
                             if (currentEvent != null)
@@ -76,7 +76,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "REPO":
-                        source.RepositoryId = chunk.Data; // TODO - Add repository class
+                        source.RepositoryId = chunk.Reference; // TODO - Add repository class
                         break;
 
                     case "REFN":

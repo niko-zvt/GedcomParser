@@ -104,7 +104,11 @@ namespace GedcomParser.Parsers
                         spousalRelation.AutoRecordId = chunk.Data;
                         break;
 
-                    case "_UPD":
+                    case "CHAN":
+                    case "_UPD": // TODO: If LastUpdateDate != null we must select newest date
+                        if(spousalRelation.LastUpdateDate != null && 
+                           spousalRelation.LastUpdateDate.Date != null)
+                            resultContainer.Warnings.Add($"Warning! In Family Type='{chunk.Type}' field LastUpdateDate is not null.");
                         spousalRelation.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
                         break;
 
@@ -112,10 +116,23 @@ namespace GedcomParser.Parsers
                         spousalRelation.Citations.Add(resultContainer.ParseCitation(chunk));
                         break;
 
-                    // Deliberately skipped for now
-                    case "CHAN":
-                    case "DSCR":
                     case "EVEN":
+                        string eventType = PersonParser.GetEventType(chunk);
+                        if (spousalRelation.Events.ContainsKey(eventType))
+                        {
+                            spousalRelation.Events[eventType].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
+                        }
+                        else
+                        {
+                            spousalRelation.Events.Add(eventType, new List<DatePlace>
+                            {
+                                resultContainer.ParseDatePlace(chunk) // TODO: Change parser to EVENT
+                            });
+                        }
+                        break;
+
+                    // Deliberately skipped for now
+                    case "DSCR":
                     case "FAMS":
                     case "FAMC":
                     case "HIST":
