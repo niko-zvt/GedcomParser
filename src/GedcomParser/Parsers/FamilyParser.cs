@@ -59,7 +59,7 @@ namespace GedcomParser.Parsers
                         relation = chunk.Data;
                         break;
 
-                    case "MARR":
+                    case "MARR": // TODO: Change parser
                         spousalRelation.Marriage.Add(resultContainer.ParseDatePlace(chunk));
                         break;
 
