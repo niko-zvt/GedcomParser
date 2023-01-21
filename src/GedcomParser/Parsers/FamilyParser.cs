@@ -245,8 +245,11 @@ namespace GedcomParser.Parsers
                                                     break;
                                             }
                                         }
-
                                         childRelation.Adoption = string.Join(", ", adoptionInfo);
+                                        break;
+
+                                    case "NOTE":
+                                        childRelation.Notes.Add(resultContainer.ParseNote(chunk2.Data, chunk2));
                                         break;
 
                                     default:
