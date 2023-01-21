@@ -26,6 +26,14 @@ namespace GedcomParser.Parsers
                         fact.Citations.Add(resultContainer.ParseCitation(chunk));
                         break;
 
+                    case "TYPE":
+                        fact.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "NOTE":
+                        fact.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
+                        break;
+
                     case "_PLC":
                         fact.PlaceId = chunk.Reference;
                         break;

@@ -26,12 +26,20 @@ namespace GedcomParser.Parsers
                         description.Citations.Add(resultContainer.ParseCitation(chunk));
                         break;
 
+                    case "TYPE":
+                        description.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "NOTE":
+                        description.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
+                        break;
+
                     case "_PLC":
                         description.PlaceId = chunk.Reference;
                         break;
 
                     default:
-                        resultContainer.Errors.Add($"Failed to handle Fact Type='{chunk.Type}'");
+                        resultContainer.Errors.Add($"Failed to handle Description Type='{chunk.Type}'");
                         break;
                 }
             }
