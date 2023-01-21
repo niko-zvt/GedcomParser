@@ -130,6 +130,10 @@ namespace GedcomParser.Parsers
                         }
                         break;
 
+                    case "REFN":
+                        spousalRelation.References.Add(resultContainer.ParseReference(chunk));
+                        break;
+
                     // Deliberately skipped for now
                     case "DSCR":
                     case "FAMS":

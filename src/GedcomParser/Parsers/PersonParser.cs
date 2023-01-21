@@ -208,7 +208,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "RIN":
-                        person.AutoRecordId = chunk.Data;
+                        person.AutoRecordId = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "_UPD":

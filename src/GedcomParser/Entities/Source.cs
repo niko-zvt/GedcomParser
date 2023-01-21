@@ -11,13 +11,14 @@ namespace GedcomParser.Entities
         public string Abbreviation { get; set; }
         public string Publication { get; set; }
         public List<string> Text { get; set; } = new List<string>();
-        public string Reference { get; set; }
+        public List<Reference> References { get; set; } = new List<Reference>();
         public string RepositoryId { get; set; }
         public string ResponsibleAgency { get; set; }
         public string AutoRecordId { get; set; }
         public List<Citation> Citations { get; set; } = new List<Citation>();
-        public List<string> Notes { get; set; } = new List<string>();
+        public List<Note> Notes { get; set; } = new List<Note>();
         public Data Data { get; set; }
+        public DatePlace LastUpdateDate { get; set; }
         public string Type { get; set; }
         public string Media { get; set; }
         public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();

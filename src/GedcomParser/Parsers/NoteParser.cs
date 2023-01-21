@@ -43,12 +43,29 @@ namespace GedcomParser.Parsers
                         note.Text = note.Text + "\n" + resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
-                    // Deliberately skipped for now
-                    case "_PLC":
-                    case "DATE":
+                    case "CHAN":
+                        note.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
+                        break;
+
                     case "PLAC":
+                    case "DATE":
+                        note.Date = resultContainer.ParseDatePlace(chunk);
+                        break;
+
+                    case "_PLC":
+                        note.PlaceId = chunk.Reference;
+                        break;
+
                     case "SOUR":
-                        resultContainer.Warnings.Add($"Skipped Note Type='{chunk.Type}'");
+                        note.Citations.Add(resultContainer.ParseCitation(chunk));
+                        break;
+
+                    case "REFN":
+                        note.References.Add(resultContainer.ParseReference(chunk));
+                        break;
+
+                    case "RIN":
+                        note.AutoRecordId = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     default:

@@ -68,7 +68,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "REFN":
-                        source.Reference = resultContainer.ParseText(chunk.Data, chunk);
+                        source.References.Add(resultContainer.ParseReference(chunk));
                         break;
 
                     case "RIN":
@@ -90,6 +90,14 @@ namespace GedcomParser.Parsers
 
                     case "OBJE":
                         source.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        break;
+
+                    case "NOTE":
+                        source.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
+                        break;
+
+                    case "CHAN":
+                        source.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
                         break;
 
                     default:
