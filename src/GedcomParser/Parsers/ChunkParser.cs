@@ -70,13 +70,14 @@ namespace GedcomParser.Parsers
             switch (chunk.Type)
             {
                 case "NOTE":
-                case "SOUR":
                 case "_PLC":
                     return 0;
-                case "INDI":
+                case "SOUR":
                     return 1;
-                case "FAM":
+                case "INDI":
                     return 2;
+                case "FAM":
+                    return 3;
                 default:
                     return 0;
             }
