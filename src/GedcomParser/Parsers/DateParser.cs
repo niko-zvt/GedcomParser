@@ -73,6 +73,10 @@ namespace GedcomParser.Parsers
                         datePlace.PlaceId = chunk.Reference;
                         break;
 
+                    case "PHON":
+                        datePlace.Address.Phone.Add(resultContainer.ParseText(chunk.Data, chunk));
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Date Place Type='{chunk.Type}'");
                         break;
