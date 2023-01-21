@@ -26,6 +26,14 @@ namespace GedcomParser.Parsers
                         education.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         break;
 
+                    case "TYPE":
+                        education.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "SOUR":
+                        education.Citations.Add(resultContainer.ParseCitation(chunk));
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Education Type='{chunk.Type}'");
                         break;
