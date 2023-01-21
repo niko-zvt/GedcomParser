@@ -56,7 +56,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "_REL":
-                        relation = chunk.Data;
+                        relation = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "MARR": // TODO: Change parser
