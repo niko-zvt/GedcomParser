@@ -36,6 +36,10 @@ namespace GedcomParser.Parsers
                         // Do nothing
                         break;
 
+                    case "NOTE":
+                        multimedia.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Multimedia Type='{chunk.Type}'");
                         break;
