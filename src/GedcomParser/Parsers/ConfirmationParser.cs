@@ -26,6 +26,14 @@ namespace GedcomParser.Parsers
                         confirmation.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         break;
 
+                    case "TYPE":
+                        confirmation.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "SOUR":
+                        confirmation.Citations.Add(resultContainer.ParseCitation(chunk));
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Confirmation Type='{chunk.Type}'");
                         break;

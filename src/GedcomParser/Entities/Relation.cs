@@ -11,6 +11,7 @@ namespace GedcomParser.Entities
         public string AutoRecordId { get; set; }
         public DatePlace LastUpdateDate { get; set; }
         public List<Citation> Citations { get; set; } = new List<Citation>();
+        public List<Note> Notes { get; set; } = new List<Note>();
         public Dictionary<string, List<DatePlace>> Events { get; set; } = new Dictionary<string, List<DatePlace>>();
     }
 
@@ -34,7 +35,6 @@ namespace GedcomParser.Entities
         public List<DatePlace> MarriageLicense      { get; set; } = new List<DatePlace>();
         public List<DatePlace> Separation           { get; set; } = new List<DatePlace>();
         public string Relation { get; set; }
-        public string Note { get; set; }
     }
 
     public class SiblingRelation : Relation

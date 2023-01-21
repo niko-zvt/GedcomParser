@@ -13,7 +13,6 @@ namespace GedcomParser.Parsers
         {
             var spousalRelation = new SpouseRelation();
             string relation = null;
-            string note = null;
             string uid = null;
             var parents = new List<Person>();
             var children = new List<Person>();
@@ -89,7 +88,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NOTE":
-                        note = resultContainer.ParseNote(chunk.Data, chunk);
+                        spousalRelation.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         break;
 
                     case "WIFE":
@@ -169,19 +168,19 @@ namespace GedcomParser.Parsers
                     MarriageLicense     = spousalRelation.MarriageLicense,
                     Separation          = spousalRelation.Separation,
                     Relation            = relation,
-                    Note                = note
+                    Notes               = spousalRelation.Notes,
                 });
                 resultContainer.SpouseRelations.Add(new SpouseRelation
-                {
-                    FamilyId = famChunk.Id,
+                {   
+                    FamilyId = famChunk.Id, // TODO: Add all fields
                     FamilyUid = uid,
                     From = parents[1],
                     To = parents[0],
                     Marriage = spousalRelation.Marriage,
                     Divorce = spousalRelation.Divorce,
                     Relation = relation,
-                    Note = note
-                });
+                    Notes = spousalRelation.Notes,
+                }); ;
             }
 
             // Parents / Children

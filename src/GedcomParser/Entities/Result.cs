@@ -12,6 +12,7 @@ namespace GedcomParser.Entities
         public List<Source> Sources { get; set; }
         public List<Place> Places { get; set; }
         public List<Group> Groups { get; set; }
+        public List<Note> Notes { get; set; }
         public HashSet<string> Warnings { get; set; }
         public HashSet<string> Errors { get; set; }
 
@@ -24,6 +25,7 @@ namespace GedcomParser.Entities
             Sources = new List<Source>();
             Places = new List<Place>();
             Groups = new List<Group>();
+            Notes = new List<Note>();
             Warnings = new HashSet<string>();
             Errors = new HashSet<string>();
         }

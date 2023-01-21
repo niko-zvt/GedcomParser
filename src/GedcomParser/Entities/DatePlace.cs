@@ -9,7 +9,7 @@ namespace GedcomParser.Entities
         public string Place { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-        public string Note { get; set; }
+        public Note Note { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
 

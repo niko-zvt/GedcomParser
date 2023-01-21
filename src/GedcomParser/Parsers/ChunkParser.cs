@@ -41,6 +41,10 @@ namespace GedcomParser.Parsers
 
                     // Deliberately skipped for now
                     case "NOTE":
+                        // resultContainer.ParseNote(chunk);
+                        resultContainer.AddIdChunk(chunk);
+                        break;
+
                     case "OBJE":
                     case "REPO":
                     case "SUBM":

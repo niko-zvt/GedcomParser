@@ -120,15 +120,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NOTE":
-                        {
-                            var noteType = chunk.Type;
-                            if (!person.Notes.ContainsKey(noteType))
-                                person.Notes.Add(noteType, new List<string>());
-
-                            var noteString = resultContainer.ParseNote(chunk.Data, chunk);
-                            if (!noteString.IsNullOrEmpty())
-                                person.Notes[noteType].Add(noteString);
-                        }
+                        person.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         break;
 
                     case "OCCU":
@@ -166,16 +158,18 @@ namespace GedcomParser.Parsers
                     case "FAMS":
                         {
                             person.FamilyId = chunk.Reference;
-                            var note = chunk.SubChunks.SingleOrDefault(c => c.Type == "NOTE");
-                            if (note != null)
+                            foreach(var subChunk in chunk.SubChunks)
                             {
-                                var famsType = chunk.Type;
-                                if (!person.Notes.ContainsKey(famsType))
-                                    person.Notes.Add(famsType, new List<string>());
+                                switch(subChunk.Type)
+                                {
+                                    case "NOTE":
+                                        person.Notes.Add(resultContainer.ParseNote(subChunk.Data, subChunk));
+                                        break;
 
-                                var noteString = resultContainer.ParseNote(note.Data, note);
-                                if (!noteString.IsNullOrEmpty())
-                                    person.Notes[famsType].Add(noteString);
+                                    default:
+                                        resultContainer.Warnings.Add($"Skipped '{subChunk.Type}' in Person Type='{chunk.Type}'");
+                                        break;
+                                }
                             }
                         }
                         break;
@@ -183,33 +177,29 @@ namespace GedcomParser.Parsers
                     case "FAMC":
                         {
                             person.FamilyChildId = chunk.Reference;
-                            var pedigreeChunk = chunk.SubChunks.SingleOrDefault(c => c.Type == "PEDI");
-                            if (pedigreeChunk != null)
-                                person.Pedigree = resultContainer.ParsePedigree(pedigreeChunk);
-
-                            var childNote = chunk.SubChunks.SingleOrDefault(c => c.Type == "NOTE");
-                            if (childNote != null)
+                            foreach (var subChunk in chunk.SubChunks)
                             {
-                                var famcType = chunk.Type;
-                                if (!person.Notes.ContainsKey(famcType))
-                                    person.Notes.Add(famcType, new List<string>());
+                                switch (subChunk.Type)
+                                {
+                                    case "PEDI":
+                                        person.Pedigree = resultContainer.ParsePedigree(subChunk);
+                                        break;
 
-                                var noteString = resultContainer.ParseNote(childNote.Data, childNote);
-                                if (!noteString.IsNullOrEmpty())
-                                    person.Notes[famcType].Add(noteString);
+                                    case "NOTE":
+                                        person.Notes.Add(resultContainer.ParseNote(subChunk.Data, subChunk));
+                                        break;
+
+                                    default:
+                                        resultContainer.Warnings.Add($"Skipped '{subChunk.Type}' in Person Type='{chunk.Type}'");
+                                        break;
+                                }
                             }
                         }
                         break;
 
                     case "HIST":
                         {
-                            var histType = chunk.Type;
-                            if (!person.Notes.ContainsKey(histType))
-                                person.Notes.Add(histType, new List<string>());
-
-                            var noteString = resultContainer.ParseNote(chunk.Data, chunk);
-                            if (!noteString.IsNullOrEmpty())
-                                person.Notes[histType].Add(noteString);
+                            person.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         }
                         break;
 

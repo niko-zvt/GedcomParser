@@ -39,20 +39,8 @@ namespace GedcomParser.Parsers
                        +1 <<MULTIMEDIA_LINK>>
                      */
 
-                    case "DATA": // TODO: Create data class and data parser
-                        {
-                            var currentEvent = chunk.SubChunks.SingleOrDefault(c => c.Type == "EVEN");
-                            if (currentEvent != null)
-                                source.Events.Add(resultContainer.ParseEvent(currentEvent));
-
-                            var agency = chunk.SubChunks.SingleOrDefault(c => c.Type == "AGNC");
-                            if (currentEvent != null)
-                                source.ResponsibleAgency = resultContainer.ParseText(agency.Data, agency);
-
-                            var note = chunk.SubChunks.SingleOrDefault(c => c.Type == "NOTE");
-                            if (note != null)
-                                source.Notes.Add(resultContainer.ParseNote(note.Data, note));
-                        }
+                    case "DATA":
+                        source.Data = resultContainer.ParseData(chunk);
                         break;
 
                     case "AUTH":

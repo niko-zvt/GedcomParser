@@ -48,6 +48,7 @@ namespace GedcomParser.Entities.Internal
                 Sources = Sources.OrderBy(s => s.Id).ToList(),
                 Places = Places.OrderBy(p => p.Id).ToList(),
                 Groups = Groups.OrderBy(g => g.Id).ToList(),
+                Notes = Notes.OrderBy(n => n.Id).ToList(),
                 ChildRelations = ChildRelations,
                 SpouseRelations = SpouseRelations,
                 SiblingRelations = SiblingRelations,

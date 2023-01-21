@@ -5,6 +5,6 @@
         public DatePlace DatePlace { get; set; }
         public string Type { get; set; }
         public string AdoptingParents { get; set; }
-        public string Note { get; set; }
+        public Note Note { get; set; }
     }
 }

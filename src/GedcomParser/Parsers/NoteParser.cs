@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using GedcomParser.Entities;
 using GedcomParser.Entities.Internal;
 using GedcomParser.Extensions;
 
@@ -8,8 +9,10 @@ namespace GedcomParser.Parsers
 {
     public static class NoteParser
     {
-        internal static string ParseNote(this ResultContainer resultContainer, string previousNote, GedcomChunk incomingChunk)
+        internal static Note ParseNote(this ResultContainer resultContainer, string previousNote, GedcomChunk incomingChunk)
         {
+            var note = new Note();
+
             var noteChunk = incomingChunk;
             if (incomingChunk.Reference.IsSpecified())
             {
@@ -20,23 +23,24 @@ namespace GedcomParser.Parsers
                 }
             }
 
-            var sb = new StringBuilder();
+            note.Type = noteChunk.Type;
+
             foreach (var chunk in noteChunk.SubChunks)
             {
                 if (chunk.IsUnwantedBlob())
                 {
-                    sb.AppendLine("(Skipped blob content)");
+                    note.IsBlobContentSkipped = true;
                     break;
                 }
 
                 switch (chunk.Type)
                 {
                     case "CONC":
-                        sb.Append(" " + chunk.Data);
+                        note.Text = note.Text + " " + resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "CONT":
-                        sb.AppendLine(chunk.Data);
+                        note.Text = note.Text + "\n" + resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     // Deliberately skipped for now
@@ -53,7 +57,12 @@ namespace GedcomParser.Parsers
                 }
             }
 
-            return previousNote.IsSpecified() ? previousNote + Environment.NewLine + sb : sb.ToString();
+            if (previousNote.IsSpecified())
+            {
+                note.Text = previousNote + Environment.NewLine + note.Text;
+            }
+
+            return note;
         }
 
         private static bool IsUnwantedBlob(this GedcomChunk chunk)

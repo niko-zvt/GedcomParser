@@ -17,7 +17,7 @@ namespace GedcomParser.Entities
         public string AutoRecordId { get; set; }
         public List<Citation> Citations { get; set; } = new List<Citation>();
         public List<string> Notes { get; set; } = new List<string>();
-        public List<Event> Events { get; set; } = new List<Event>();
+        public Data Data { get; set; }
         public string Type { get; set; }
         public string Media { get; set; }
         public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();

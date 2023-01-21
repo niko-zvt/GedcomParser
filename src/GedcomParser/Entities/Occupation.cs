@@ -8,7 +8,7 @@ namespace GedcomParser.Entities
         public string Title { get; set; }
         public string PlaceId { get; set; }
         public DatePlace DatePlace { get; set; }
-        public List<string> Notes { get; set; } = new List<string>();
+        public List<Note> Notes { get; set; } = new List<Note>();
         public List<Citation> Citations { get; set; } = new List<Citation>();
     }
 }
