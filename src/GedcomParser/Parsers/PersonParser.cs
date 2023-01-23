@@ -90,7 +90,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "IDNO":
-                        person.IdNumber = resultContainer.ParseText(chunk.Data, chunk);
+                        person.IdNumbers.Add(resultContainer.ParseIdentifier(chunk));
                         break;
 
                     case "IMMI":

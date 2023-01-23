@@ -6,7 +6,6 @@ namespace GedcomParser.Entities
     {
         public string Id { get; set; }
         public string Uid { get; set; }
-        public string IdNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
@@ -46,5 +45,6 @@ namespace GedcomParser.Entities
         public List<Multimedia> Multimedia { get; set; } = new List<Multimedia>();
         public List<Citation> Citations { get; set; } = new List<Citation>();
         public List<string> PlaceIds { get; set; } = new List<string>();
+        public List<Identifier> IdNumbers { get; set; } = new List<Identifier>();
     }
 }

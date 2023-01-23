@@ -11,7 +11,7 @@ namespace GedcomParser.Parsers
         {
             var reference = new Reference();
             reference.Id = incomingChunk.Id;
-            reference.Text = resultContainer.ParseText(incomingChunk.Data, incomingChunk);
+            reference.Text = incomingChunk.Data;
 
             foreach (var chunk in incomingChunk.SubChunks)
             {
