@@ -176,14 +176,22 @@ namespace GedcomParser.Parsers
                 });
                 resultContainer.SpouseRelations.Add(new SpouseRelation
                 {   
-                    FamilyId = famChunk.Id, // TODO: Add all fields
+                    FamilyId = famChunk.Id,
                     FamilyUid = uid,
                     From = parents[1],
                     To = parents[0],
-                    Marriage = spousalRelation.Marriage,
-                    Divorce = spousalRelation.Divorce,
-                    Relation = relation,
-                    Notes = spousalRelation.Notes,
+                    Engagement          = spousalRelation.Engagement,
+                    Marriage            = spousalRelation.Marriage,
+                    MarriageContract    = spousalRelation.MarriageContract,
+                    MarriageSettlement  = spousalRelation.MarriageSettlement,
+                    DivorceFiled        = spousalRelation.DivorceFiled,
+                    Divorce             = spousalRelation.Divorce,
+                    Annulment           = spousalRelation.Annulment,
+                    MarriageBann        = spousalRelation.MarriageBann,
+                    MarriageLicense     = spousalRelation.MarriageLicense,
+                    Separation          = spousalRelation.Separation,
+                    Relation            = relation,
+                    Notes               = spousalRelation.Notes,
                 }); ;
             }
 
