@@ -49,9 +49,11 @@ namespace GedcomParser.Entities.Internal
                 Places = Places.OrderBy(p => p.Id).ToList(),
                 Groups = Groups.OrderBy(g => g.Id).ToList(),
                 Notes = Notes.OrderBy(n => n.Id).ToList(),
+                Submitters = Submitters.OrderBy(s => s.Id).ToList(),
                 ChildRelations = ChildRelations,
                 SpouseRelations = SpouseRelations,
                 SiblingRelations = SiblingRelations,
+                LogInfo = new HashSet<string>(LogInfo.OrderBy(e => e)),
                 Errors = new HashSet<string>(Errors.OrderBy(e => e)),
                 Warnings = new HashSet<string>(Warnings.OrderBy(e => e))
             };
