@@ -192,7 +192,7 @@ namespace GedcomParser.Parsers
                     Separation          = spousalRelation.Separation,
                     Relation            = relation,
                     Notes               = spousalRelation.Notes,
-                }); ;
+                });
             }
 
             // Parents / Children
