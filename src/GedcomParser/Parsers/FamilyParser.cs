@@ -31,7 +31,6 @@ namespace GedcomParser.Parsers
                         {
                             children.Add(child);
                         }
-
                         break;
 
                     case "DIV":
@@ -52,7 +51,6 @@ namespace GedcomParser.Parsers
                         {
                             parents.Add(husband);
                         }
-
                         break;
 
                     case "_REL":
@@ -105,8 +103,7 @@ namespace GedcomParser.Parsers
 
                     case "CHAN":
                     case "_UPD": // TODO: If LastUpdateDate != null we must select newest date
-                        if(spousalRelation.LastUpdateDate != null && 
-                           spousalRelation.LastUpdateDate.Date != null)
+                        if(spousalRelation.LastUpdateDate != null && spousalRelation.LastUpdateDate.Date != null)
                             resultContainer.Warnings.Add($"Warning! In Family Type='{chunk.Type}' field LastUpdateDate is not null.");
                         spousalRelation.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
                         break;

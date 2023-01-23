@@ -22,12 +22,36 @@ namespace GedcomParser.Parsers
                         occupation.DatePlace = resultContainer.ParseDatePlace(chunk);
                         break;
 
+                    case "ADDR":
+                        occupation.Address = resultContainer.ParseAddress(chunk);
+                        break;
+
+                    case "AGE":
+                        occupation.Age = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "AGNC":
+                        occupation.ResponsibleAgency = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "OBJE":
+                        occupation.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        break;
+
+                    case "TYPE":
+                        occupation.Type = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
                     case "NOTE":
                         occupation.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         break;
 
                     case "SOUR":
                         occupation.Citations.Add(resultContainer.ParseCitation(chunk));
+                        break;
+
+                    case "CAUS":
+                        occupation.CauseOfEvent = resultContainer.ParseText(chunk.Data, chunk);
                         break;
 
                     case "_PLC":
