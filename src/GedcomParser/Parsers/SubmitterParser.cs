@@ -48,6 +48,14 @@ namespace GedcomParser.Parsers
                         submitter.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
                         break;
 
+                    case "LANG":
+                        submitter.Language = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
+                    case "RIN":
+                        submitter.AutoRecordId = resultContainer.ParseText(chunk.Data, chunk);
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Submitter Type='{chunk.Type}'");
                         break;
