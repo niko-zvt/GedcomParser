@@ -46,7 +46,11 @@ namespace GedcomParser.Services
                 else
                 {
                     var parent = gedcomChunkLevels.GetParentChunk(chunk);
-                    parent.SubChunks.Add(chunk);
+                    if (parent != null)
+                    {
+                        chunk.ParentChunk = parent;
+                        parent.SubChunks.Add(chunk);
+                    }
                 }
 
                 gedcomChunkLevels.Set(chunk);

@@ -216,7 +216,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "OBJE":
-                        person.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        person.Multimedia.Add(resultContainer.ParseMultimedia(chunk));
                         break;
 
                     case "_PLC":

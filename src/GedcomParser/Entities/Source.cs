@@ -21,6 +21,6 @@ namespace GedcomParser.Entities
         public DatePlace LastUpdateDate { get; set; }
         public string Type { get; set; }
         public string Media { get; set; }
-        public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
+        public List<Multimedia> Multimedia { get; set; } = new List<Multimedia>();
     }
 }

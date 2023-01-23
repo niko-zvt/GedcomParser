@@ -43,7 +43,7 @@ namespace GedcomParser.Entities
         public List<DatePlace> Destination { get; set; } = new List<DatePlace>();
         public List<Note> Notes { get; set; } = new List<Note>();
         public List<Fact> Facts { get; set; } = new List<Fact>();
-        public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
+        public List<Multimedia> Multimedia { get; set; } = new List<Multimedia>();
         public List<Citation> Citations { get; set; } = new List<Citation>();
         public List<string> PlaceIds { get; set; } = new List<string>();
     }

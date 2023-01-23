@@ -89,7 +89,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "OBJE":
-                        source.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        source.Multimedia.Add(resultContainer.ParseMultimedia(chunk));
                         break;
 
                     case "NOTE":

@@ -14,6 +14,9 @@ namespace GedcomParser.Parsers
 
             foreach (var chunk in chunks.OrderBy(Priority))
             {
+                // In all internal parsers of low-level tags (presented below),
+                // it is worth first checking for the presence of records in
+                // the ResultContainer by the chunk reference id (see Note or Text parsers).
                 switch (chunk.Type)
                 {
                     case "HEAD":
@@ -24,6 +27,11 @@ namespace GedcomParser.Parsers
                     case "SUBN":
                         // Do nothing.
                         // Specific to Ancestral File; obsolete.
+                        break;
+
+                    case "CSTA": // TODO: Parse CSTA
+                        // Child status; used as 'enum' by Reunion software
+                        // CSTA is not a regular GEDCOM Standard tag.
                         break;
 
                     case "FAM":
@@ -51,7 +59,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NOTE":
-                        // resultContainer.ParseNote(chunk); // TODO
+                        // resultContainer.ParseNote(chunk); // TODO: Parse notes
                         resultContainer.AddIdChunk(chunk);
                         break;
 
@@ -62,7 +70,6 @@ namespace GedcomParser.Parsers
 
                     case "OBJE":
                     case "REPO":
-                    case "CSTA": // Child status; used as 'enum' by Reunion software
                         //resultContainer.Warnings.Add($"Failed to handle top level Type='{chunk.Type}'");
                         break;
  
@@ -84,6 +91,7 @@ namespace GedcomParser.Parsers
                 case "_PLC":
                     return 0;
                 case "SOUR":
+                case "SUBM":
                     return 1;
                 case "INDI":
                     return 2;

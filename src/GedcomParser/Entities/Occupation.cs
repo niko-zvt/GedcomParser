@@ -15,6 +15,6 @@ namespace GedcomParser.Entities
         public DatePlace DatePlace { get; set; }
         public List<Note> Notes { get; set; } = new List<Note>();
         public List<Citation> Citations { get; set; } = new List<Citation>();
-        public List<Multimedia> Multimedias { get; set; } = new List<Multimedia>();
+        public List<Multimedia> Multimedia { get; set; } = new List<Multimedia>();
     }
 }

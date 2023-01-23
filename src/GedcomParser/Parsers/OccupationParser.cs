@@ -35,7 +35,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "OBJE":
-                        occupation.Multimedias.Add(resultContainer.ParseMultimedia(chunk));
+                        occupation.Multimedia.Add(resultContainer.ParseMultimedia(chunk));
                         break;
 
                     case "TYPE":

@@ -32,6 +32,22 @@ namespace GedcomParser.Parsers
                         submitter.Address.Email.Add(resultContainer.ParseText(chunk.Data, chunk));
                         break;
 
+                    case "WWW":
+                        submitter.Address.Web.Add(resultContainer.ParseText(chunk.Data, chunk));
+                        break;
+
+                    case "RFN": // SUBM.RFN Specific to Ancestral File; obsolete.
+                        resultContainer.LogInfo.Add($"Skipped '{chunk.Type}' tag in Submitter");
+                        break;
+
+                    case "OBJE":
+                        submitter.Multimedia.Add(resultContainer.ParseMultimedia(chunk));
+                        break;
+
+                    case "CHAN":
+                        submitter.LastUpdateDate = resultContainer.ParseDatePlace(chunk);
+                        break;
+
                     default:
                         resultContainer.Errors.Add($"Failed to handle Submitter Type='{chunk.Type}'");
                         break;
