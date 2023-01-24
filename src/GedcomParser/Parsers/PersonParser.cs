@@ -55,21 +55,23 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "EDUC":
-                        person.Education = resultContainer.ParseEducation(chunk);
+                        person.Educations.Add(resultContainer.ParseEducation(chunk));
                         break;
 
                     case "EVEN":
-                        string eventType = GetEventType(chunk);
-                        if (person.Events.ContainsKey(eventType))
                         {
-                            person.Events[eventType].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
-                        }
-                        else
-                        {
-                            person.Events.Add(eventType, new List<DatePlace>
+                            string eventType = GetEventType(chunk);
+                            if (person.Events.ContainsKey(eventType))
+                            {
+                                person.Events[eventType].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
+                            }
+                            else
+                            {
+                                person.Events.Add(eventType, new List<DatePlace>
                             {
                                 resultContainer.ParseDatePlace(chunk) // TODO: Change parser to EVENT
                             });
+                            }
                         }
                         break;
 
@@ -98,21 +100,22 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NAME":
-                        var nameSections = chunk.Data.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        if (nameSections.Length > 0)
                         {
-                            person.FirstName = nameSections[0];
-                        }
+                            var nameSections = chunk.Data.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            if (nameSections.Length > 0)
+                            {
+                                person.FirstName = nameSections[0];
+                            }
 
-                        if (nameSections.Length > 1)
-                        {
-                            person.LastName = nameSections[1];
+                            if (nameSections.Length > 1)
+                            {
+                                person.LastName = nameSections[1];
+                            }
                         }
-
                         break;
 
                     case "NATI":
-                        person.Nationality = resultContainer.ParseText(chunk.Data, chunk);
+                        person.Nationality = resultContainer.ParseNationality(chunk);
                         break;
 
                     case "NATU":
@@ -140,7 +143,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "RELI":
-                        person.Religion = resultContainer.ParseText(chunk.Data, chunk);
+                        person.Religions.Add(resultContainer.ParseReligion(chunk));
                         break;
 
                     case "SEX":
@@ -204,7 +207,49 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NCHI":
-                        person.NumberOfChildren = resultContainer.ParseText(chunk.Data, chunk);
+                        {
+                            person.NumberOfChildren = chunk.Data;
+                            foreach (var subChunk in chunk.SubChunks)
+                            {
+                                switch (subChunk.Type)
+                                {
+                                    case "TYPE":
+                                        // Do nothing.
+                                        break;
+
+                                    case "NOTE":
+                                        person.Notes.Add(resultContainer.ParseNote($"Number of children: {chunk.Data}." + " " + subChunk.Data, subChunk));
+                                        break;
+
+                                    case "DATE":
+                                    case "PLAC":
+                                        {
+                                            string typeOfNCHI = GetEventType(chunk);
+                                            if (person.Events.ContainsKey(typeOfNCHI))
+                                            {
+                                                person.Events[typeOfNCHI].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
+                                            }
+                                            else
+                                            {
+                                                person.Events.Add(typeOfNCHI, new List<DatePlace> { resultContainer.ParseDatePlace(chunk) }); // TODO: Change parser to EVENT
+                                            }
+                                        }
+                                        break;
+
+                                    case "SOUR":
+                                        {
+                                            var citation = resultContainer.ParseCitation(chunk);
+                                            citation.Text = $"Number of children: {chunk.Data}." + " " + citation.Text;
+                                            person.Citations.Add(citation);
+                                        }
+                                        break;
+
+                                    default:
+                                        resultContainer.Warnings.Add($"Skipped '{subChunk.Type}' in Person Type='{chunk.Type}'");
+                                        break;
+                                }
+                            }
+                        }
                         break;
 
                     case "RIN":
@@ -224,21 +269,62 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NMR":
-                        person.NumberOfRelationships = resultContainer.ParseText(chunk.Data, chunk);
+                        {
+                            person.NumberOfRelationships = chunk.Data;
+                            foreach (var subChunk in chunk.SubChunks)
+                            {
+                                switch (subChunk.Type)
+                                {
+                                    case "TYPE":
+                                        // Do nothing.
+                                        break;
+
+                                    case "NOTE":
+                                        person.Notes.Add(resultContainer.ParseNote($"Number of relationships: {chunk.Data}." + " " + subChunk.Data, subChunk));
+                                        break;
+
+                                    case "DATE":
+                                    case "PLAC":
+                                        {
+                                            string typeOfNMR = GetEventType(chunk);
+                                            if (person.Events.ContainsKey(typeOfNMR))
+                                            {
+                                                person.Events[typeOfNMR].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
+                                            }
+                                            else
+                                            {
+                                                person.Events.Add(typeOfNMR, new List<DatePlace> { resultContainer.ParseDatePlace(chunk) }); // TODO: Change parser to EVENT
+                                            }
+                                        }
+                                        break;
+
+                                    case "SOUR":
+                                        {
+                                            var citation = resultContainer.ParseCitation(chunk);
+                                            citation.Text = $"Number of relationships: {chunk.Data}." + " " + citation.Text;
+                                            person.Citations.Add(citation);
+                                        }
+                                        break;
+
+                                    default:
+                                        resultContainer.Warnings.Add($"Skipped '{subChunk.Type}' in Person Type='{chunk.Type}'");
+                                        break;
+                                }
+                            }
+                        }
                         break;
 
                     case "CONF":
                         person.Confirmation = resultContainer.ParseConfirmation(chunk);
                         break;
 
-                    // Deliberately skipped for now
                     case "_GRP":
                         person.GroupId = chunk.Reference;
                         break;
 
                     default:
-                        //resultContainer.Warnings.Add($"Skipped Person Type='{chunk.Type}'");
-                        resultContainer.Errors.Add($"Failed to handle Person Type='{chunk.Type}'");
+                        var parent = indiChunk.ParentChunk != null ? indiChunk.ParentChunk.Type : " -- ";
+                        resultContainer.Errors.Add($"PersonParser: Failed to handle '{parent}' -> '{indiChunk.Type}' -> '{chunk.Type}'.");
                         break;
                 }
             }

@@ -18,10 +18,8 @@ namespace GedcomParser.Entities
         public string NumberOfChildren { get; set; }
         public string NumberOfRelationships { get; set; }
         public Pedigree Pedigree { get; set; }
-        public Education Education { get; set; }
-        public string Religion { get; set; }
         public Confirmation Confirmation { get; set; }
-        public string Nationality { get; set; }
+        public Nationality Nationality { get; set; }
         public string Changed { get; set; }
         public Occupation Occupation { get; set; }
         public string Health { get; set; }
@@ -35,6 +33,8 @@ namespace GedcomParser.Entities
         public List<DatePlace> Emigrated { get; set; } = new List<DatePlace>();
         public List<DatePlace> Immigrated { get; set; } = new List<DatePlace>();
         public List<DatePlace> BecomingCitizen { get; set; } = new List<DatePlace>();
+        public List<Religion> Religions { get; set; } = new List<Religion>();
+        public List<Education> Educations { get; set; } = new List<Education>();
         public DatePlace Graduation { get; set; }
         public DatePlace LastUpdateDate { get; set; }
         public Dictionary<string, List<DatePlace>> Events { get; set; } = new Dictionary<string, List<DatePlace>>();
