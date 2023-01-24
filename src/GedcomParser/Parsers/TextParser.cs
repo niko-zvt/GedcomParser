@@ -40,7 +40,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     default:
-                        var parent = incomingChunk.ParentChunk != null ? incomingChunk.ParentChunk.Type : null;
+                        var parent = incomingChunk.ParentChunk != null ? incomingChunk.ParentChunk.Type : " -- ";
                         resultContainer.Errors.Add($"TextParser: Failed to handle '{parent}' -> '{incomingChunk.Type}' -> '{chunk.Type}'.");
                         break;
                 }
