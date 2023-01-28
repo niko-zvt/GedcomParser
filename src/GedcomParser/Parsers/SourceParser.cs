@@ -48,7 +48,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "TITL":
-                        source.Title = resultContainer.ParseText(chunk.Data, chunk);
+                        source.Title = resultContainer.ParseTitle(chunk);
                         break;
 
                     case "ABBR":

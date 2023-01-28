@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GedcomParser.Entities.Events;
 
 namespace GedcomParser.Entities
 {
@@ -14,6 +15,7 @@ namespace GedcomParser.Entities
         public List<Reference> References { get; set; } = new List<Reference>();
         public List<Note> Notes { get; set; } = new List<Note>();
         public Dictionary<string, List<DatePlace>> Events { get; set; } = new Dictionary<string, List<DatePlace>>();
+        public List<Census> Censuses { get; set; } = new List<Census>();
     }
 
     public class ChildRelation : Relation

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using GedcomParser.Entities;
+using GedcomParser.Entities.Events;
 using GedcomParser.Entities.Internal;
-using GedcomParser.Extensions;
-using static GedcomParser.Entities.Person;
+using GedcomParser.Parsers.EventParsers;
 
 namespace GedcomParser.Parsers
 {
@@ -23,19 +23,23 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "ADOP":
-                        person.Adoption = resultContainer.ParseAdoption(chunk);
+                        person.Events.Add(resultContainer.ParseAdoption(chunk));
                         break;
 
                     case "BAPM":
-                        person.Baptized = resultContainer.ParseDatePlace(chunk);
+                        person.Events.Add(resultContainer.ParseReligion(chunk, Religion.Category.Baptism));
                         break;
 
                     case "BIRT":
-                        person.Birth = resultContainer.ParseDatePlace(chunk);
+                        person.Events.Add(resultContainer.ParseBirth(chunk));
+                        break;
+
+                    case "CREM":
+                        person.Events.Add(resultContainer.ParseFinalDisposition(chunk, FinalDisposition.Category.Cremation));
                         break;
 
                     case "BURI":
-                        person.Buried = resultContainer.ParseDatePlace(chunk);
+                        person.Events.Add(resultContainer.ParseFinalDisposition(chunk, FinalDisposition.Category.Burial));
                         break;
 
                     case "CHAN":
@@ -43,11 +47,11 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "CHR":
-                        person.Baptized = resultContainer.ParseDatePlace(chunk);
+                        person.Events.Add(resultContainer.ParseReligion(chunk, Religion.Category.Christening));
                         break;
 
                     case "DEAT":
-                        person.Death = resultContainer.ParseDatePlace(chunk);
+                        person.Events.Add(resultContainer.ParseDeath(chunk));
                         break;
 
                     case "DSCR":
@@ -55,28 +59,15 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "EDUC":
-                        person.Educations.Add(resultContainer.ParseEducation(chunk));
+                        person.Events.Add(resultContainer.ParseEducation(chunk));
                         break;
 
                     case "EVEN":
-                        {
-                            string eventType = GetEventType(chunk);
-                            if (person.Events.ContainsKey(eventType))
-                            {
-                                person.Events[eventType].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
-                            }
-                            else
-                            {
-                                person.Events.Add(eventType, new List<DatePlace>
-                            {
-                                resultContainer.ParseDatePlace(chunk) // TODO: Change parser to EVENT
-                            });
-                            }
-                        }
+                        person.Events.Add(resultContainer.ParseEvent(chunk));
                         break;
 
                     case "EMIG":
-                        person.Emigrated.Add(resultContainer.ParseDatePlace(chunk));
+                        person.Events.Add(resultContainer.ParseMigration(chunk, Migration.Category.Emigration));
                         break;
 
                     case "FACT":
@@ -84,7 +75,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "GRAD":
-                        person.Graduation = resultContainer.ParseDatePlace(chunk);
+                        person.Events.Add(resultContainer.ParseEvent(chunk));
                         break;
 
                     case "HEAL":
@@ -96,7 +87,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "IMMI":
-                        person.Immigrated.Add(resultContainer.ParseDatePlace(chunk));
+                        person.Events.Add(resultContainer.ParseMigration(chunk, Migration.Category.Immigration));
                         break;
 
                     case "NAME":
@@ -115,11 +106,11 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "NATI":
-                        person.Nationality = resultContainer.ParseNationality(chunk);
+                        person.Events.Add(resultContainer.ParseNationality(chunk));
                         break;
 
                     case "NATU":
-                        person.BecomingCitizen.Add(resultContainer.ParseDatePlace(chunk));
+                        person.Events.Add(resultContainer.ParseNaturalisation(chunk));
                         break;
 
                     case "NOTE":
@@ -127,23 +118,23 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "OCCU":
-                        person.Occupation = resultContainer.ParseOccupation(chunk);
+                        person.Events.Add(resultContainer.ParseOccupation(chunk));
                         break;
 
                     case "RESI":
-                        person.Residence.Add(resultContainer.ParseDatePlace(chunk));
+                        person.Events.Add(resultContainer.ParseResidence(chunk));
                         break;
 
                     case "CENS":
-                        person.Census.Add(resultContainer.ParseDatePlace(chunk));
+                        person.Events.Add(resultContainer.ParseCensus(chunk));
                         break;
 
                     case "_DEST":
-                        person.Destination.Add(resultContainer.ParseDatePlace(chunk));
+                        person.Events.Add(resultContainer.ParseEvent(chunk));
                         break;
 
                     case "RELI":
-                        person.Religions.Add(resultContainer.ParseReligion(chunk));
+                        person.Events.Add(resultContainer.ParseReligion(chunk));
                         break;
 
                     case "SEX":
@@ -151,7 +142,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "TITL":
-                        person.Title = resultContainer.ParseText(chunk.Data, chunk);
+                        person.Title = resultContainer.ParseTitle(chunk);
                         break;
 
                     case "SOUR":
@@ -223,17 +214,7 @@ namespace GedcomParser.Parsers
 
                                     case "DATE":
                                     case "PLAC":
-                                        {
-                                            string typeOfNCHI = GetEventType(chunk);
-                                            if (person.Events.ContainsKey(typeOfNCHI))
-                                            {
-                                                person.Events[typeOfNCHI].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
-                                            }
-                                            else
-                                            {
-                                                person.Events.Add(typeOfNCHI, new List<DatePlace> { resultContainer.ParseDatePlace(chunk) }); // TODO: Change parser to EVENT
-                                            }
-                                        }
+                                        person.Events.Add(resultContainer.ParseEvent(chunk));
                                         break;
 
                                     case "SOUR":
@@ -285,17 +266,7 @@ namespace GedcomParser.Parsers
 
                                     case "DATE":
                                     case "PLAC":
-                                        {
-                                            string typeOfNMR = GetEventType(chunk);
-                                            if (person.Events.ContainsKey(typeOfNMR))
-                                            {
-                                                person.Events[typeOfNMR].Add(resultContainer.ParseDatePlace(chunk)); // TODO: Change parser to EVENT
-                                            }
-                                            else
-                                            {
-                                                person.Events.Add(typeOfNMR, new List<DatePlace> { resultContainer.ParseDatePlace(chunk) }); // TODO: Change parser to EVENT
-                                            }
-                                        }
+                                        person.Events.Add(resultContainer.ParseEvent(chunk));
                                         break;
 
                                     case "SOUR":
@@ -315,7 +286,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "CONF":
-                        person.Confirmation = resultContainer.ParseConfirmation(chunk);
+                        person.Events.Add(resultContainer.ParseConfirmation(chunk));
                         break;
 
                     case "_GRP":

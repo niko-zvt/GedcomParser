@@ -3,6 +3,7 @@ using System.Linq;
 using GedcomParser.Entities;
 using GedcomParser.Entities.Internal;
 using GedcomParser.Extensions;
+using GedcomParser.Parsers.EventParsers;
 
 namespace GedcomParser.Parsers
 {

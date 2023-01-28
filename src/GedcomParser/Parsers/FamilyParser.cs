@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GedcomParser.Entities;
 using GedcomParser.Entities.Internal;
-
+using GedcomParser.Parsers.EventParsers;
 
 namespace GedcomParser.Parsers
 {
@@ -132,6 +132,16 @@ namespace GedcomParser.Parsers
                         break;
 
                     // Deliberately skipped for now
+                    case "CENS":
+                        spousalRelation.Censuses.Add(resultContainer.ParseCensus(chunk));
+                        break;
+
+                    case "SLGS":
+                        break;
+
+                    case "SUBM":
+                        break;
+
                     case "DSCR":
                     case "FAMS":
                     case "FAMC":

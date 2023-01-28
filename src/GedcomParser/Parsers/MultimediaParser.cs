@@ -22,7 +22,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "TITL":
-                        multimedia.Title = resultContainer.ParseText(chunk.Data, chunk);
+                        multimedia.Title = resultContainer.ParseTitle(chunk);
                         break;
 
                     case "FORM":

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using GedcomParser.Entities;
 using GedcomParser.Entities.Internal;
-
+using GedcomParser.Parsers.EventParsers;
 
 namespace GedcomParser.Parsers
 {

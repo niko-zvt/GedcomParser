@@ -4,12 +4,20 @@ namespace GedcomParser.Entities
 {
     public class Event
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
         public string Type { get; set; }
-        public DatePlace DatePlace { get; set; }
+        public string Age { get; set; }
+        public string ResponsibleAgency { get; set; }
+        public string PlaceId { get; set; }
+        public string CauseOfEvent { get; set; }
+        public Address Address { get; set; }
+        public DatePlace DatePlace { get; set; } = new DatePlace();
         public string Description { get; set; }
-
+        public List<Note> Notes { get; set; } = new List<Note>();
+        public List<Citation> Citations { get; set; } = new List<Citation>();
+        public List<Multimedia> Multimedia { get; set; } = new List<Multimedia>();
         public enum GedcomEventType
         {
             Unknown,

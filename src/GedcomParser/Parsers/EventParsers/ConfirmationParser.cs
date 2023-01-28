@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using GedcomParser.Entities;
+using GedcomParser.Entities.Events;
 using GedcomParser.Entities.Internal;
 
 
-namespace GedcomParser.Parsers
+namespace GedcomParser.Parsers.EventParsers
 {
     public static class ConfirmationParser
     {
@@ -11,12 +11,20 @@ namespace GedcomParser.Parsers
         {
             var confirmation = new Confirmation();
             confirmation.Id = incomingChunk.Id;
-            confirmation.Title = incomingChunk.Data;
+            confirmation.Description = incomingChunk.Data;
 
             foreach (var chunk in incomingChunk.SubChunks)
             {
                 switch (chunk.Type)
                 {
+                    case "CONC":
+                        confirmation.Description = confirmation.Description + " " + chunk.Data;
+                        break;
+
+                    case "CONT":
+                        confirmation.Description = confirmation.Description + "\n" + chunk.Data;
+                        break;
+
                     case "PLAC":
                     case "DATE":
                         confirmation.DatePlace = resultContainer.ParseDatePlace(chunk);

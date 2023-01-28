@@ -9,7 +9,10 @@ namespace GedcomParser.Entities
         public string Place { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-        public Note Note { get; set; }
+        public List<Note> Notes { get; set; } = new List<Note>();
+        public string ResponsibleAgency { get; set; }
+        public string HusbandAgeAtEvent { get; set; }
+        public string WifeAgeAtEvent { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
 

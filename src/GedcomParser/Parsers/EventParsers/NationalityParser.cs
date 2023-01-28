@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using GedcomParser.Entities;
+using GedcomParser.Entities.Events;
 using GedcomParser.Entities.Internal;
 
 
-namespace GedcomParser.Parsers
+namespace GedcomParser.Parsers.EventParsers
 {
     public static class NationalityParser
     {
