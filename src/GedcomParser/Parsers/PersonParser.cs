@@ -152,9 +152,9 @@ namespace GedcomParser.Parsers
                     case "FAMS":
                         {
                             person.FamilyId = chunk.Reference;
-                            foreach(var subChunk in chunk.SubChunks)
+                            foreach (var subChunk in chunk.SubChunks)
                             {
-                                switch(subChunk.Type)
+                                switch (subChunk.Type)
                                 {
                                     case "NOTE":
                                         person.Notes.Add(resultContainer.ParseNote(subChunk.Data, subChunk));
@@ -192,9 +192,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "HIST":
-                        {
-                            person.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
-                        }
+                        person.Notes.Add(resultContainer.ParseNote(chunk.Data, chunk));
                         break;
 
                     case "NCHI":
@@ -295,6 +293,33 @@ namespace GedcomParser.Parsers
 
                     case "_GRP":
                         person.GroupId = chunk.Reference;
+                        break;
+
+                    case "AFN":
+                    case "ALIA":
+                    case "ANCI":
+                    case "BAPL":
+                    case "CONL":
+                    case "DESI":
+                    case "ENDL":
+                    case "ORDN":
+                    case "SLGC":
+                    case "RESN":
+                    case "SSN":
+                    case "SLGS":
+                    case "SUBN":
+                    case "STAT":
+                        // These tags, which are valid in GEDCOM 5.5.1, do not appear in GEDCOM 5.5.5 files.
+                        {
+                            var info = $"Skipped '{chunk.Type}' tag in Person.";
+                            if (String.IsNullOrEmpty(chunk.Reference) == false)
+                                info += $"\nReference: {chunk.Reference}";
+                            if (String.IsNullOrEmpty(chunk.Data) == false)
+                                info += $"\nData: {chunk.Data}";
+                            if (chunk.SubChunks.Count > 0)
+                                info += $"\nSub-chunks: {chunk.SubChunks.Count}";
+                            resultContainer.LogInfo.Add(info);
+                        }
                         break;
 
                     default:

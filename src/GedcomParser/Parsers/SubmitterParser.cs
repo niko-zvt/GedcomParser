@@ -37,7 +37,7 @@ namespace GedcomParser.Parsers
                         break;
 
                     case "RFN": // SUBM.RFN Specific to Ancestral File; obsolete.
-                        resultContainer.LogInfo.Add($"Skipped '{chunk.Type}' tag in Submitter");
+                        resultContainer.LogInfo.Add($"Skipped '{chunk.Type}' tag in Submitter.");
                         break;
 
                     case "OBJE":
