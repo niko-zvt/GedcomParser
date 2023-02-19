@@ -289,6 +289,10 @@ namespace GedcomParser.Parsers
                         person.Events.Add(resultContainer.ParseConfirmation(chunk));
                         break;
 
+                    case "FCOM":
+                        person.Events.Add(resultContainer.ParseFirstCommunion(chunk));
+                        break;
+
                     case "_GRP":
                         person.GroupId = chunk.Reference;
                         break;
